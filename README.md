@@ -1,3 +1,7 @@
+```
+Frontend side
+```
+
 # school-board
 
 ## Project setup
