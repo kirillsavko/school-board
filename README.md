@@ -1,8 +1,5 @@
-### Frontend side
-
-# school-board
-
-## Project setup
+# Frontend side
+### Project setup
 ```
 yarn install
 ```
