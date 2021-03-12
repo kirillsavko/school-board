@@ -10,19 +10,14 @@
         container
       "
     >
-      <router-link
-        :to='routesList.main'
-        class='header__logo'
-      >
-        <img src='@/assets/img/icons/logo-icon.svg' alt=''>
-      </router-link>
+      <Logo />
       <div
         class='
           text-white
           text-xl
         '
       >
-        © Copyright 2021
+        © Copyright {{getCurrentYear()}}
       </div>
     </div>
   </footer>
@@ -30,14 +25,23 @@
 
 <script lang='ts'>
 import { routes } from '@/constants';
+import Logo from '@/components/Logo';
 
 export default {
+  components: {
+    Logo,
+  },
   setup() {
     const routesList = routes;
 
     return {
       routesList,
     };
+  },
+  methods: {
+    getCurrentYear() {
+      return new Date().getFullYear();
+    },
   },
 };
 </script>

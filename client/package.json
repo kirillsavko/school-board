@@ -12,6 +12,7 @@
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
+    "vuelidate": "^0.7.6",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
@@ -53,7 +54,8 @@
     },
     "rules": {
       "import/prefer-default-export": "off",
-      "max-len": "off"
+      "max-len": "off",
+      "@typescript-eslint/interface-name-prefix": "off"
     }
   },
   "browserslist": [
