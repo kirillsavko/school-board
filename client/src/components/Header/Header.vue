@@ -36,13 +36,14 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue';
+import { RouteLocationNormalizedLoaded } from 'vue-router';
 
 import { routes } from '@/constants';
 import Button from '@/components/Button';
 import Logo from '@/components/Logo';
 
 export default defineComponent<{
-  $route: any;
+  $route: RouteLocationNormalizedLoaded;
 }>({
   components: {
     Button,
