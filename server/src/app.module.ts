@@ -8,10 +8,10 @@ import { ApiModule } from './api.module';
 
 @Module({
   imports: [
-    // GraphQLModule.forRoot({
-    //   typePaths: ['./**/*.graphql'],
-    //   context: ({ req }) => ({ headers: req.headers }),
-    // }),
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ headers: req.headers }),
+    }),
     ApiModule,
     TypeOrmModule.forRoot(),
   ],

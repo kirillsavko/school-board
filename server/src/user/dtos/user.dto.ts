@@ -12,8 +12,9 @@ export class UserDTO {
 
 export class UserRO {
   id: string;
-  username: string;
+  name: string;
+  surname: string;
   created: Date;
   token?: string;
-  role?: string;
+  // role?: string;
 }
