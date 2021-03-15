@@ -25,15 +25,19 @@ export class UserEntity {
 
   @Column({
     type: 'text',
-    unique: true,
   })
   name: string;
 
   @Column({
     type: 'text',
-    unique: true,
   })
   surname: string;
+
+  @Column({
+    type: 'text',
+    unique: true,
+  })
+  email: string;
 
   @Column('text')
   password: string;
@@ -57,12 +61,25 @@ export class UserEntity {
   }
 
   toResponseObject(showToken = true): UserRO {
-    const { id, created, name, surname, token } = this;
+    const { id, created, name, surname, token, email } = this;
+
+    let role;
+
+    const roleObject = Object.values(ROLES).reduce((acc, enumRole) => {
+      if (this[role]) {
+        role = enumRole;
+        acc[enumRole] = this[enumRole];
+      }
+      return acc;
+    }, {});
+
     const responseObject: UserRO = {
       id,
       created,
       name,
       surname,
+      email,
+      ...roleObject,
     };
 
     if (showToken) {
@@ -73,13 +90,23 @@ export class UserEntity {
   }
 
   private get token(): string {
-    const { id, surname, name } = this;
+    const { id, email } = this;
+
+    let role;
+
+    const roleObject = Object.values(ROLES).reduce((acc, enumRole) => {
+      if (this[enumRole]) {
+        role = enumRole;
+        acc[enumRole] = this[enumRole];
+      }
+      return acc;
+    }, {});
 
     return jwt.sign(
       {
         id,
-        surname,
-        name,
+        email,
+        role,
       },
       process.env.SECRET,
       { expiresIn: '7d' },

@@ -1,19 +1,29 @@
-import { IsNotEmpty } from 'class-validator';
-import { ROLES } from 'src/enums/roles';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import { ROLES } from '../../enums/roles';
 
 export class UserDTO {
   @IsNotEmpty()
-  username: string;
+  email: string;
+
+  @IsOptional()
+  name?: string;
+
+  @IsOptional()
+  surname?: string;
 
   @IsNotEmpty()
   password: string;
-  role?: ROLES;
+
+  @IsOptional()
+  @IsEnum(Object.values(ROLES))
+  role?: string;
 }
 
 export class UserRO {
   id: string;
   name: string;
   surname: string;
+  email: string;
   created: Date;
   token?: string;
   // role?: string;

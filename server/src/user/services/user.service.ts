@@ -14,6 +14,13 @@ export class UserService {
   async createUser(data: UserDTO) {
     const user = await this.userRepository.create(data);
     await this.userRepository.save(user);
-    return user.toResponseObject();
+    return user;
+  }
+
+  async getUser(email) {
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['teacher', 'student', 'parent'],
+    });
   }
 }

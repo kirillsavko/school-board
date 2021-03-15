@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { DateScalar } from './shared/date.scalar';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { ApiModule } from './api.module';
@@ -20,6 +20,7 @@ import { ApiModule } from './api.module';
       provide: APP_FILTER,
       useClass: HttpErrorFilter,
     },
+    DateScalar,
   ],
 })
 export class AppModule {}

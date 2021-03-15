@@ -1,6 +1,5 @@
 import { UserEntity } from 'src/user/entities/user.entity';
 import {
-  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
