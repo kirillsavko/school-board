@@ -5,11 +5,15 @@ import {
   Column,
   CreateDateColumn,
   BeforeInsert,
+  OneToOne,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
 import { UserRO } from '../dtos/user.dto';
+import { TeacherEntity } from 'src/teacher/teacher.entity';
+import { ParentEntity } from 'src/parent/parent.entity';
+import { StudentEntity } from '../../student/student.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -23,13 +27,25 @@ export class UserEntity {
     type: 'text',
     unique: true,
   })
-  username: string;
+  name: string;
+
+  @Column({
+    type: 'text',
+    unique: true,
+  })
+  surname: string;
 
   @Column('text')
   password: string;
 
-  @Column({ type: 'enum', enum: ROLES, default: ROLES.PARENT })
-  role: ROLES;
+  @OneToOne(() => TeacherEntity, (teacher: TeacherEntity) => teacher.user)
+  teacher: TeacherEntity;
+
+  @OneToOne(() => ParentEntity, (parent: ParentEntity) => parent.user)
+  parent: ParentEntity;
+
+  @OneToOne(() => StudentEntity, (student: StudentEntity) => student.user)
+  student: StudentEntity;
 
   @BeforeInsert()
   async hashPassword() {
@@ -41,12 +57,12 @@ export class UserEntity {
   }
 
   toResponseObject(showToken = true): UserRO {
-    const { id, created, username, token, role } = this;
+    const { id, created, name, surname, token } = this;
     const responseObject: UserRO = {
       id,
       created,
-      username,
-      role,
+      name,
+      surname,
     };
 
     if (showToken) {
@@ -57,13 +73,13 @@ export class UserEntity {
   }
 
   private get token(): string {
-    const { id, username, role } = this;
+    const { id, surname, name } = this;
 
     return jwt.sign(
       {
         id,
-        username,
-        role,
+        surname,
+        name,
       },
       process.env.SECRET,
       { expiresIn: '7d' },
